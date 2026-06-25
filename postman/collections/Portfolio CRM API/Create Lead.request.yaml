@@ -1,0 +1,20 @@
+$kind: http-request
+name: Create Lead
+method: POST
+url: 'http://localhost:5000/api/leads'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "clientName": "John Doe",
+      "companyName": "Acme Corp",
+      "budget": "$2k-$5k",
+      "projectType": "SaaS",
+      "coreFeatures": ["Authentication", "Dashboard"],
+      "readiness": "I have a detailed brief/wireframes",
+      "notes": "Looking to build a SaaS MVP"
+    }
