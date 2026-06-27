@@ -15,7 +15,7 @@ const LeadSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Budget is required'],
       enum: {
-        values: ['Less than $2k', '$2k-$5k', '$5k-$10k', '$10k+'],
+        values: ['Less than $52', '$52-$73', '$73-$100', '$100+'],
         message: '{VALUE} is not a valid budget option'
       }
     },
