@@ -1,0 +1,11 @@
+# Dependencies (Crucial to prevent repo bloating)
+node_modules
+**/node_modules/
+
+# Build and cache outputs
+.next
+.turbo
+
+# Environment configurations (Contains your MongoDB URI, JWT Secrets, API Keys)
+.env*
+!.env.example
