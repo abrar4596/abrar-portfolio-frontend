@@ -53,10 +53,8 @@ const initialFormState: LeadData = {
   currentReadiness: ""
 };
 
-// API function to submit lead data to the backend
+// API function to submit lead data to the backend via the Next.js proxy endpoint
 const submitLeadData = async (formData: LeadData): Promise<{ success: boolean; leadId?: string; message?: string }> => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-  
   const payload = {
     clientName: formData.clientName,
     companyName: formData.companyName,
@@ -66,21 +64,36 @@ const submitLeadData = async (formData: LeadData): Promise<{ success: boolean; l
     readiness: formData.currentReadiness
   };
 
-  const response = await fetch(`${apiUrl}/api/leads`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  });
+  try {
+    const response = await fetch("/api/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
 
-  const data = await response.json();
+    const contentType = response.headers.get("content-type") || "";
+    let responseData: { message?: string; leadId?: string } = {};
 
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong. Please try again.");
+    if (contentType.includes("application/json")) {
+      responseData = await response.json();
+    } else {
+      responseData = { message: await response.text() };
+    }
+
+    if (!response.ok) {
+      throw new Error(responseData.message || "Something went wrong. Please try again.");
+    }
+
+    return { success: true, leadId: responseData.leadId };
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Unable to reach the server. Please check your connection and try again.");
+    }
+
+    throw error;
   }
-
-  return { success: true, leadId: data.leadId };
 };
 
 export function ContactForm() {

@@ -7,5 +7,5 @@ node_modules
 .turbo
 
 # Environment configurations (Contains your MongoDB URI, JWT Secrets, API Keys)
-.env*
+.env.local
 !.env.example
