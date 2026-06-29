@@ -14,22 +14,35 @@ export async function POST(request: NextRequest) {
 
     const contentType = response.headers.get("content-type") || "";
     const responseText = await response.text();
+    let parsedBody: unknown = null;
+
+    if (contentType.includes("application/json") && responseText) {
+      try {
+        parsedBody = JSON.parse(responseText);
+      } catch {
+        parsedBody = null;
+      }
+    }
 
     if (!response.ok) {
+      const backendMessage = parsedBody && typeof parsedBody === "object" && "message" in parsedBody
+        ? (parsedBody as { message?: string }).message
+        : responseText || "Submission failed";
+
       return NextResponse.json(
         {
           success: false,
-          message: responseText || "Submission failed"
+          message: backendMessage || "Submission failed"
         },
         { status: response.status }
       );
     }
 
-    if (contentType.includes("application/json")) {
-      return NextResponse.json(JSON.parse(responseText), { status: response.status });
+    if (parsedBody && typeof parsedBody === "object") {
+      return NextResponse.json(parsedBody, { status: response.status });
     }
 
-    return NextResponse.json({ success: true, message: responseText }, { status: response.status });
+    return NextResponse.json({ success: true, message: responseText || "Submission successful" }, { status: response.status });
   } catch (error) {
     console.error("Proxy lead submission failed", error);
     return NextResponse.json(
