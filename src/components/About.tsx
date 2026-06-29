@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ShieldCheck, GraduationCap, Eye, FileSpreadsheet } from "lucide-react";
-import { ParallaxImage } from "./ParallaxImage";
+import { ParallaxVideo } from "./ParallaxVideo";
 import { ScrollReveal } from "./ScrollReveal";
 
 export function About() {
@@ -14,11 +14,10 @@ export function About() {
           {/* Left Column: Portrait Image */}
           <div className="lg:col-span-5 order-2 lg:order-1">
             <ScrollReveal direction="left">
-              <ParallaxImage
-                src="/about-portrait.jpg"
-                alt="Mohammad Abrar Khan - Portrait"
+              <ParallaxVideo
+                src="/about-portrait1.mp4"
                 aspectRatio="square"
-                className="rounded-lg filter grayscale hover:grayscale-0 transition-all duration-[1s]"
+                className="rounded-lg"
               />
             </ScrollReveal>
           </div>
