@@ -21,7 +21,7 @@ export function Footer() {
       {/* Decorative massive background typography statement */}
       <div className="w-full overflow-hidden select-none pointer-events-none mb-12 md:mb-20">
         <motion.h2
-          className="font-syne font-extrabold text-[12vw] sm:text-[10vw] leading-[0.8] text-center uppercase tracking-tighter text-[#141414] whitespace-nowrap"
+          className="font-syne font-extrabold text-[9vw] md:text-[8vw] lg:text-[7.5vw] leading-[0.9] text-center uppercase tracking-tighter text-[#141414]"
           initial={{ y: 50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
