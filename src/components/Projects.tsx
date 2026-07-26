@@ -61,14 +61,9 @@ export function Projects() {
 
       {/* Projects List View */}
       <div className="w-full border-t border-neutral-900">
-        {PROJECTS.map((project) => (
-          <div
-            key={project.id}
-            className="border-b border-neutral-900 group"
-            onMouseEnter={() => setHoveredProject(project.id)}
-            onMouseLeave={() => setHoveredProject(null)}
-          >
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-14 flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer">
+        {PROJECTS.map((project) => {
+          const content = (
+            <>
               {/* Left Column: Number and Title */}
               <div className="flex items-start md:items-center gap-6 md:gap-12">
                 <span className="font-mono text-sm md:text-base text-neutral-600 group-hover:text-white transition-colors duration-500 pt-1 md:pt-0">
@@ -101,9 +96,33 @@ export function Projects() {
                   className="object-cover brightness-[0.7] contrast-[1.1]"
                 />
               </div>
+            </>
+          );
+
+          return (
+            <div
+              key={project.id}
+              className="border-b border-neutral-900 group"
+              onMouseEnter={() => setHoveredProject(project.id)}
+              onMouseLeave={() => setHoveredProject(null)}
+            >
+              {project.id === 1 ? (
+                <a
+                  href="https://atoz-gold.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-14 flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer no-underline text-inherit"
+                >
+                  {content}
+                </a>
+              ) : (
+                <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-14 flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer">
+                  {content}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Desktop Floating Image Follower */}
